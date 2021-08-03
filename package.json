@@ -1,0 +1,23 @@
+{
+  "name": "cwid",
+  "version": "1.0.0",
+  "description": "Copious World content Identififier",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "http-server &  open http://localhost:8080/test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/copious-world/CWID.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/copious-world/CWID/issues"
+  },
+  "homepage": "https://github.com/copious-world/CWID#readme"
+}

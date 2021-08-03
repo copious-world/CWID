@@ -1,0 +1,174 @@
+{
+  "identity": {
+    "encoding": "identity",
+    "code": "0x00",
+    "description": "8-bit binary (encoder and decoder keeps data unmodified)",
+    "status": "default",
+    "supported": false
+  },
+  "base2": {
+    "encoding": "base2",
+    "code": "0",
+    "description": "binary (01010101)",
+    "status": "candidate",
+    "supported": false
+  },
+  "base8": {
+    "encoding": "base8",
+    "code": "7",
+    "description": "octal",
+    "status": "draft",
+    "supported": false
+  },
+  "base10": {
+    "encoding": "base10",
+    "code": "9",
+    "description": "decimal",
+    "status": "draft",
+    "supported": false
+  },
+  "base16": {
+    "encoding": "base16",
+    "code": "f",
+    "description": "hexadecimal",
+    "status": "default",
+    "supported": false
+  },
+  "base16upper": {
+    "encoding": "base16upper",
+    "code": "F",
+    "description": "hexadecimal",
+    "status": "default",
+    "supported": false
+  },
+  "base32hex": {
+    "encoding": "base32hex",
+    "code": "v",
+    "description": "rfc4648 case-insensitive - no padding - highest char",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32hexupper": {
+    "encoding": "base32hexupper",
+    "code": "V",
+    "description": "rfc4648 case-insensitive - no padding - highest char",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32hexpad": {
+    "encoding": "base32hexpad",
+    "code": "t",
+    "description": "rfc4648 case-insensitive - with padding",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32hexpadupper": {
+    "encoding": "base32hexpadupper",
+    "code": "T",
+    "description": "rfc4648 case-insensitive - with padding",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32": {
+    "encoding": "base32",
+    "code": "b",
+    "description": "rfc4648 case-insensitive - no padding",
+    "status": "default",
+    "supported": false
+  },
+  "base32upper": {
+    "encoding": "base32upper",
+    "code": "B",
+    "description": "rfc4648 case-insensitive - no padding",
+    "status": "default",
+    "supported": false
+  },
+  "base32pad": {
+    "encoding": "base32pad",
+    "code": "c",
+    "description": "rfc4648 case-insensitive - with padding",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32padupper": {
+    "encoding": "base32padupper",
+    "code": "C",
+    "description": "rfc4648 case-insensitive - with padding",
+    "status": "candidate",
+    "supported": false
+  },
+  "base32z": {
+    "encoding": "base32z",
+    "code": "h",
+    "description": "z-base-32 (used by Tahoe-LAFS)",
+    "status": "draft",
+    "supported": false
+  },
+  "base36": {
+    "encoding": "base36",
+    "code": "k",
+    "description": "base36 [0-9a-z] case-insensitive - no padding",
+    "status": "draft",
+    "supported": false
+  },
+  "base36upper": {
+    "encoding": "base36upper",
+    "code": "K",
+    "description": "base36 [0-9a-z] case-insensitive - no padding",
+    "status": "draft",
+    "supported": false
+  },
+  "base58btc": {
+    "encoding": "base58btc",
+    "code": "z",
+    "description": "base58 bitcoin",
+    "status": "default",
+    "supported": false
+  },
+  "base58flickr": {
+    "encoding": "base58flickr",
+    "code": "Z",
+    "description": "base58 flicker",
+    "status": "candidate",
+    "supported": false
+  },
+  "base64": {
+    "encoding": "base64",
+    "code": "m",
+    "description": "rfc4648 no padding",
+    "status": "default",
+    "supported": false
+  },
+  "base64pad": {
+    "encoding": "base64pad",
+    "code": "M",
+    "description": "rfc4648 with padding - MIME encoding",
+    "status": "candidate",
+    "supported": false
+  },
+  "base64url": {
+    "encoding": "base64url",
+    "code": "u",
+    "description": "rfc4648 no padding",
+    "status": "default",
+    "supported": false
+  },
+  "base64urlpad": {
+    "encoding": "base64urlpad",
+    "code": "U",
+    "description": "rfc4648 with padding",
+    "status": "default",
+    "supported": false
+  },
+  "proquint": {
+    "encoding": "proquint",
+    "code": "p",
+    "description": "PRO-QUINT https://arxiv.org/html/0901.4016",
+    "status": "draft",
+    "supported": false
+  },
+  "": {
+    "encoding": "",
+    "supported": false
+  }
+}
