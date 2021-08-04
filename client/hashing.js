@@ -23,7 +23,7 @@ async function fetch_tables() {
     return true
 }
 
-setTimeout(fetch_tables,10)
+setTimeout(fetch_tables,0)
 
 async function do_hash_buffer(text) {
     const encoder = new TextEncoder();
@@ -105,7 +105,8 @@ export class CWID {
         this.data_type = 'raw'
         this.type_code = formats ? formats[this.data_type].code.substr(2) : '55'
         this._descriptor = false
-        this. select_base(this.base)
+        this.tables_promised = false
+        this.select_base(this.base)
     }
 
     correct_base(base) {
@@ -114,12 +115,18 @@ export class CWID {
         return base
     }
 
-    select_base(base) {
+    async select_base(base) {
+        if ( this.tables_promised !== false ) {
+            await this.tables_promised
+            this.tables_promised = false
+        }
         if ( multibase === false ) {
-            setTimeout(async () => {
-                let b = await fetch_tables()
-                this.select_base(base)
-            },0)
+            this.tables_promised = new Promise((resolve,reject) => {
+                setTimeout(async () => {
+                    let b = await fetch_tables()
+                    resolve(b)
+                },0)    
+            })
         } else {
             base = this.correct_base(base)
             this.base = base
