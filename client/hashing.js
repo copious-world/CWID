@@ -5,7 +5,7 @@ if ( g_crypto === null  ) {
   alert("No cryptography support in this browser. To claim ownership of assets, please use another browser.")
 }
 
-
+const HASH_SEP = '!'
 import * as base64 from "../modules/base64.js";
 import * as base_string from "../modules/base_string.js";
 
@@ -176,18 +176,18 @@ export class CWID {
     async cwid(text) {
         let hh = await this._hash_of_sha(text,this.base)
         let code = this.descriptor()
-        let _cwid = this.base_code + code + '|' + hh
+        let _cwid = this.base_code + code + HASH_SEP + hh
         return _cwid
     }
 
     async ipfs_cid(text) {
         if ( this.base === 'base16' ) {
             let _cwid = await this.cwid(text)
-            _cwid = _cwid.replace('|','')
+            _cwid = _cwid.replace(HASH_SEP,'')
             return _cwid
         } else if ( (this.base === 'base64') || (this.base === 'base64url') ) {
             let _cwid = await this.cwid(text)
-            let parts = _cwid.split('|')
+            let parts = _cwid.split(HASH_SEP)
             let p = parts[0].substr(1)
             parts[0] = base64.base64ToBytes(p)
             p = parts[1]
@@ -203,7 +203,7 @@ export class CWID {
             let backup_base = this.base
             this.select_base('base16')
             let _cwid = await this.cwid(text)
-            _cwid = _cwid.replace('|','')
+            _cwid = _cwid.replace(HASH_SEP,'')
             this.select_base(backup_base)
             return _cwid
         }
