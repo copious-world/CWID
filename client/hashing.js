@@ -134,7 +134,8 @@ export class CWID {
             switch ( this.base ) {
                 case 'base64url': {
                     let AoB = base_string.hex_toByteArray(this._descriptor)
-                    this._descriptor = base64.bytesToBase64(AoB)
+                    let descr = base64.bytesToBase64(AoB)
+                    this._descriptor = descr.replace(/\=+/g,'')
                     break;
                 }
                 case 'base64' :
@@ -151,7 +152,8 @@ export class CWID {
     async _hash_of_sha(text,base) {
         if ( !(base) ) base = 'base64url'
         if ( base === 'base64url' ) {
-            return  await _do_hash(text)
+            let hh = await _do_hash(text)
+            return hh.replace(/\=+/g,'')
         } else if ( base === 'hex' || base === 'base16' ) {
             let b64 = await do_hash_buffer(text)
             return base_string.hex_fromTypedArray(new Uint8Array(b64))
@@ -189,8 +191,10 @@ export class CWID {
             let _cwid = await this.cwid(text)
             let parts = _cwid.split(HASH_SEP)
             let p = parts[0].substr(1)
+            while ( p.length % 4 ) p += '='
             parts[0] = base64.base64ToBytes(p)
             p = parts[1]
+            while ( p.length % 4 ) p += '='
             parts[1] = base64.base64ToBytes(p)
             var bytes = new Uint8Array([
                 ...parts[0],
