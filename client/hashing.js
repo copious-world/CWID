@@ -190,7 +190,7 @@ export class CWID {
     }
 
     hash_from_cwid(cwid) {
-        let parts = cwid.split[HASH_SEP]
+        let parts = cwid.split(HASH_SEP)
         return(parts[1])
     }
 
@@ -199,6 +199,7 @@ export class CWID {
         let hh = this.hash_from_cwid(cwid)
         let ua8 = false
         if ( base === 'u' ) {
+            while ( hh.length % 4 ) hh += '='
             ua8 = base64.base64ToBytes(hh)
         } else if ( base === 'f' ) {
             ua8 = base_string.hex_toByteArray(hh)
@@ -291,7 +292,7 @@ export class CWID {
                 break
             }
             case 'u' : {
-                let buf =  base64.base64ToBytes(bytes)
+                let buf = base64.base64ToBytes(bytes)
                 let hexstr = base_string.hex_fromByteArray(buf)
                 let prefix = hexstr.substr(0,8)
                 let rest  = hexstr.substr(8)

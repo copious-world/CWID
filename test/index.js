@@ -37,6 +37,13 @@ async function run_test() {
     console.log(cwid)
     cwid = cwider.change_base(cwid,'u')
     console.log(cwid)
+    let hh = cwider.hash_from_cwid(cwid)
+    console.log('hash from cwid: ')
+    console.log(hh)
+    let bb = cwider.hash_buffer_from_cwid(cwid)
+    console.log('hash buffer from cwid: ')
+    console.log(bb)
+
     console.log('--------------------------------------')
 }
 

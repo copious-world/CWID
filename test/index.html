@@ -705,8 +705,13 @@
 		document.write('<br><b>hex cwid to base64url</b>: ')
 		cwid = cwider.change_base(cwid,'u')
 		document.write(cwid)
+		let hh = cwider.hash_from_cwid(cwid)
+		document.write('<br><b>hash from cwid</b>: ')
+		document.write(hh)
+		let bb = cwider.hash_buffer_from_cwid(cwid)
+		document.write('<br><b>hash buffer from cwid</b>: ')
+		document.write(bb)
 		document.write('<hr>')
-		
 	})()
 </script>
 <body>
