@@ -189,6 +189,77 @@ export class CWID {
         return _cwid
     }
 
+    hash_from_cwid(cwid) {
+        let parts = cwid.split[HASH_SEP]
+        return(parts[1])
+    }
+
+    hash_buffer_from_cwid(cwid) {
+        let base = cwid[0]
+        let hh = this.hash_from_cwid(cwid)
+        let ua8 = false
+        if ( base === 'u' ) {
+            ua8 = base64.base64ToBytes(hh)
+        } else if ( base === 'f' ) {
+            ua8 = base_string.hex_toByteArray(hh)
+        }
+        return ua8
+    }
+
+
+    _hex_parts_to_CWID(prefix,rest) {
+        let preBuf = base_string.hex_toByteArray(prefix)
+        let tailBuf = base_string.hex_toByteArray(rest)
+        prefix = base64.bytesToBase64(preBuf)
+        prefix = prefix.replace(/\=+/g,'')
+        rest = base64.bytesToBase64(tailBuf)
+        rest = rest.replace(/\=+/g,'')
+        let cwid = 'u' + prefix + HASH_SEP + rest
+        return cwid
+    }
+
+    _base64_parts_to_hex_CWID(prefix,rest) {
+        while ( prefix.length % 4 ) prefix += '='
+        while ( rest.length % 4 ) rest += '='
+        let preBuf = base64.base64ToBytes(prefix)
+        let tailBuf = base64.base64ToBytes(rest)
+        prefix = base_string.hex_fromByteArray(preBuf)
+        rest = base_string.hex_fromByteArray(tailBuf)
+        let cwid = 'f' + prefix + HASH_SEP + rest
+        return cwid
+    }
+
+
+    change_base(cwid,to) {
+        let from = cwid[0]
+        let code = cwid.substr(1)
+        if ( from === to ) {
+            return cwid
+        }
+        switch(from) {
+            case 'f' : {
+                if ( to === 'u' ) to = 'base64url'
+                if ( (to !== 'base64') && (to !== 'base64url') ) {
+                    console.log("only support from hex-to-base64<type>")
+                    return false
+                }
+                let [prefix,rest] = code.split(HASH_SEP)
+                return this._hex_parts_to_CWID(prefix,rest)
+            }
+            case 'u': {
+                if ( from === 'u' ) from = 'base64url'
+                if ( to === 'f' ) to = 'hex'
+                if ( (to !== 'base16') && (to !== 'hex') ) {
+                    console.log("only support from hex-to-base64<type>")
+                    return false
+                }
+                let [prefix,rest] = code.split(HASH_SEP)
+                return this._base64_parts_to_hex_CWID(prefix,rest)
+            }
+        }
+        return false
+    }
+
     async ipfs_cid(text) {
         if ( this.base === 'base16' ) {
             let _cwid = await this.cwid(text)
@@ -196,20 +267,8 @@ export class CWID {
             return _cwid
         } else if ( (this.base === 'base64') || (this.base === 'base64url') ) {
             let _cwid = await this.cwid(text)
-            let parts = _cwid.split(HASH_SEP)
-            let p = parts[0].substr(1)
-            while ( p.length % 4 ) p += '='
-            parts[0] = base64.base64ToBytes(p)
-            p = parts[1]
-            while ( p.length % 4 ) p += '='
-            parts[1] = base64.base64ToBytes(p)
-            var bytes = new Uint8Array([
-                ...parts[0],
-                ...parts[1]
-            ]);
-            let cid = base64.bytesToBase64(bytes)
-            cid = this.base_code + cid
-            return cid
+            this.select_base('base64url')
+            return this.cwid_to_cid(_cwid)
         } else {
             let backup_base = this.base
             this.select_base('base16')
@@ -219,6 +278,50 @@ export class CWID {
             return _cwid
         }
     }
+
+    ipfs_cid_to_cwid(cid) {
+        let code = cid[0]
+        let bytes = cid.substr(1)
+        let cwid = ''
+        switch (code) {
+            case 'f' : {
+                let prefix = bytes.substr(0,8)
+                let rest  = bytes.substr(8)
+                cwid = 'f' + prefix + '!' + rest
+                break
+            }
+            case 'u' : {
+                let buf =  base64.base64ToBytes(bytes)
+                let hexstr = base_string.hex_fromByteArray(buf)
+                let prefix = hexstr.substr(0,8)
+                let rest  = hexstr.substr(8)
+                cwid = this._hex_parts_to_CWID(prefix,rest)
+                break
+            }
+            default : {
+                return false
+            }
+        }
+        return cwid
+    }
+
+    cwid_to_cid(cwid) {
+        let parts = cwid.split(HASH_SEP)
+        let p = parts[0].substr(1)
+        while ( p.length % 4 ) p += '='
+        parts[0] = base64.base64ToBytes(p)
+        p = parts[1]
+        while ( p.length % 4 ) p += '='
+        parts[1] = base64.base64ToBytes(p)
+        var bytes = new Uint8Array([
+            ...parts[0],
+            ...parts[1]
+        ]);
+        let cid = base64.bytesToBase64(bytes)
+        cid = this.base_code + cid
+        return cid
+    }
+
 }
 
 

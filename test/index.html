@@ -667,9 +667,8 @@
 <script>
 	let hasher = async () => {
 		let p = await do_hash("this")
-		document.write('<br>')
-		document.write('<hr>')
-		document.write(p)	
+		document.write('delayed: <b>sha256 hash of "this" base64url:</b>  ')
+		document.write(p)
 	}
 	setTimeout(hasher,2000)
 </script>
@@ -680,28 +679,34 @@
 		let cwider = new CWID()
 		let text = "MUCH TO DO ABOUT IDENTITY"
 		let p = await cwider._hash_of_sha(text,'hex')
-		document.write('<br>')
 		document.write(text)
 		document.write('<br>')
 		document.write(p)
-		document.write('<hr>')
+		document.write('<hr> <b>cwid [base64url]</b>: ')
 		let cwid = await cwider.cwid(text)
 		document.write(cwid)
 		await cwider.select_base('hex')
 		cwid = await cwider.cwid(text)
-		document.write('<br>')
+		document.write('<br><b>cwid [hex]</b>: ')
 		document.write(cwid)
-		document.write('<h4>back to base64</h4>')
+		document.write('<h4>back to base64</h4>  <b>cwid [base64]</b>: ')
 		await cwider.select_base('base64')
 		cwid = await cwider.cwid(text)
-		document.write('<br>')
 		document.write(cwid)
-		document.write('<h4>ipfs cid base64</h4>')
+		document.write('<h4>ipfs cid base64url</h4>')
 		let cid = await cwider.ipfs_cid(text)
-		document.write('<br>')
 		document.write(cid)
+		cwid = cwider.ipfs_cid_to_cwid(cid)
+		document.write('<br><b>cid to cwid</b>: ')
+		document.write(cwid)
+		document.write('<br><b>base64url cwid to hex</b>: ')
+		cwid = cwider.change_base(cwid,'f')
+		document.write(cwid)
+		document.write('<br><b>hex cwid to base64url</b>: ')
+		cwid = cwider.change_base(cwid,'u')
+		document.write(cwid)
 		document.write('<hr>')
-
+		
 	})()
 </script>
 <body>
