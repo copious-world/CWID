@@ -7,6 +7,7 @@ console.log(p)
 
 async function run_test() {
     let cwider = new CWID()
+    await cwider.init()
     let text = "MUCH TO DO ABOUT IDENTITY"
     let p = await cwider._hash_of_sha(text,'hex')
     console.log('')
@@ -44,6 +45,17 @@ async function run_test() {
     console.log('hash buffer from cwid: ')
     console.log(bb)
 
+    console.log('--------------------------------------')
+    cwid = cwider.change_base(cwid,'m')
+    console.log(cwid)
+    cwid = cwider.change_base(cwid,'u')
+    console.log(cwid)
+    cwid = cwider.change_base(cwid,'hex')
+    console.log(cwid)
+    cwid = cwider.change_base(cwid,'m')
+    console.log(cwid)
+    cwid = cwider.change_base(cwid,'u')
+    console.log(cwid)
     console.log('--------------------------------------')
 }
 

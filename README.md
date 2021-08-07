@@ -12,6 +12,7 @@ A method is provided to extract the hash string from the ***CWID***. But, in jav
 
 ```
 let cwid_maker = new CWID()
+await cwid_maker.init()
 let cwid = await cwid_maker.cwid("this is some text")
 let hh_sha255 = (cwid.split('!'))[1]
 // This will be in the base chosen for the CWID (either hex or base64url).
@@ -36,4 +37,34 @@ npm test
 ```
 node ./test/index.js
 ```
+
+## Methods
+
+* constructor
+> has no parameters. new CWID returns a CWID factory. Use it to make many CWIDs
+
+* select\_base(base)
+> base can be one of *base64*,*base64url* or one of *hex*,*base16*
+
+* cwid(text)
+> returns a CWID in the selected base. The default is *base64url*
+
+* change\_base(cwid,to)
+> The current base will be read off of the CWID. And, it will be converted to the **to** base. (hex in [hex,base16,f]) (base64url in [base64url, u]) (base64 in [base64,m])
+
+* hash\_from\_cwid(cwid)
+> Just splits the string and returns the second half 
+
+* hash\_buffer\_from\_cwid(cwid)
+> converts the second half of the string to uint8Array 
+
+* async ipfs\_cid(text)
+> Retuns an ipfs CID of the text in hex or base64url. 
+
+* ipfs\_cid\_to\_cwid(cid)
+> Retuns an ipfs CID of the text in hex or base64url.
+
+* cwid\_to\_cid(cwid)
+> Converts from a CWID to an IPFS CID in the selected base.
+
 
