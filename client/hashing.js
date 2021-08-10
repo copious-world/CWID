@@ -25,7 +25,7 @@ async function fetch_tables() {
 
 setTimeout(fetch_tables,0)
 
-async function do_hash_buffer(text) {
+export async function do_hash_buffer(text) {
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
     const hash = await g_crypto.digest('SHA-256', data);
