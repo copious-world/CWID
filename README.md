@@ -6,7 +6,7 @@ You might pronouns it as "quid" or you might say, "swid" like squid.
 
 ### Purpose
 
-A ***CWID*** is something like and IPFS CID, but it has a different format. In particular it separates a prefix string and a string representing the SHA256 of content by a delimiting character. The *exclamation point*, **'!'**, has been chosen as this delimiting character.
+A ***CWID*** is something like an IPFS CID, but it has a different format. In particular it separates a prefix string and a string representing the SHA256 of content by a delimiting character. The *exclamation point*, **'!'**, has been chosen as this delimiting character.
 
 A method is provided to extract the hash string from the ***CWID***. But, in javascript it can be easily done by spliting the string. E.g.
 

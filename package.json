@@ -1,23 +1,32 @@
 {
   "name": "cwid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Copious World content Identififier",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "http-server &  open http://localhost:8080/test/"
+    "test": "node test/index.js & http-server &  open http://localhost:8080/test/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/copious-world/CWID.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "distributed",
+    "identity",
+    "CWID",
+    "DID", "CID"
+  ],
+  "author": "Richard Leddy",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/copious-world/CWID/issues"
   },
-  "homepage": "https://github.com/copious-world/CWID#readme"
+  "homepage": "https://github.com/copious-world/CWID#readme",
+  "funding": {
+    "type" : "GitHub Sponsors",
+    "url" : "https://github.com/sponsors/copious-world"
+  }
 }
