@@ -1,6 +1,6 @@
 {
   "name": "cwid",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Copious World content Identififier",
   "main": "index.js",
   "directories": {
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/copious-world/CWID.git"
   },
   "keywords": [
-    "distributed",
+    "decentralized",
     "identity",
     "CWID",
     "DID", "CID"

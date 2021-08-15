@@ -61,7 +61,7 @@
     "code": "0x12",
     "status": "permanent",
     "description": "",
-    "supported": false
+    "supported": true
   },
   "sha2-512": {
     "name": "sha2-512",

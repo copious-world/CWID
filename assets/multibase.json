@@ -32,7 +32,7 @@
     "code": "f",
     "description": "hexadecimal",
     "status": "default",
-    "supported": false
+    "supported": true
   },
   "base16upper": {
     "encoding": "base16upper",
@@ -137,7 +137,7 @@
     "code": "m",
     "description": "rfc4648 no padding",
     "status": "default",
-    "supported": false
+    "supported": true
   },
   "base64pad": {
     "encoding": "base64pad",
@@ -151,7 +151,7 @@
     "code": "u",
     "description": "rfc4648 no padding",
     "status": "default",
-    "supported": false
+    "supported": true
   },
   "base64urlpad": {
     "encoding": "base64urlpad",
