@@ -17,7 +17,8 @@
     "decentralized",
     "identity",
     "CWID",
-    "DID", "CID"
+    "DID",
+    "CID"
   ],
   "author": "Richard Leddy",
   "license": "ISC",
@@ -26,7 +27,10 @@
   },
   "homepage": "https://github.com/copious-world/CWID#readme",
   "funding": {
-    "type" : "GitHub Sponsors",
-    "url" : "https://github.com/sponsors/copious-world"
+    "type": "GitHub Sponsors",
+    "url": "https://github.com/sponsors/copious-world"
+  },
+  "devDependencies": {
+    "roll-right": "^0.0.1"
   }
 }

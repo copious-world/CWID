@@ -1,0 +1,14 @@
+lockfileVersion: 5.3
+
+specifiers:
+  roll-right: ^0.0.1
+
+devDependencies:
+  roll-right: 0.0.1
+
+packages:
+
+  /roll-right/0.0.1:
+    resolution: {integrity: sha512-OrzpFKoFZzNoY5CBcGLD+9LHCvps+GBZDDdvLxH6mElqkpnY4EDoUAaNu7VT3/MBCEIn24ZsCmS06EALMSObRA==}
+    hasBin: true
+    dev: true
