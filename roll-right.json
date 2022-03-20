@@ -1,0 +1,19 @@
+{
+    "modules" : {
+        "path_abreviations" : {
+            "[alpha-copious]" : "[github]/alphas/alpha-copious",
+            "[github]" : "~/Documents/GitHub"
+        },
+        "ext_default_dir" : {
+            ".html" : "[alpha-copious]/html",
+            ".js" : "[alpha-copious]/client",
+            ".svg" : "[alpha-copious]/icons"
+        },
+        "sources" : {
+            "client/cwid.js" : "[alpha-copious]/client",
+            "modules/base64.js" : "[alpha-copious]/modules",
+            "client/base64.js" : "[alpha-copious]/client",
+            "client/base_string.js" : "[alpha-copious]/client"
+        }
+    }
+}

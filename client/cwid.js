@@ -1,14 +1,15 @@
 //
-
-var g_crypto = window.crypto ? window.crypto.subtle : null
-if ( g_crypto === null  ) {
-  alert("No cryptography support in this browser. To claim ownership of assets, please use another browser.")
-}
+// MODULE: CRYPTO WRAPS (windowized)
 
 const HASH_SEP = '!'
-import * as base64 from "../modules/base64.js";
-import * as base_string from "../modules/base_string.js";
 
+// >> import
+//modularize>> import * as base64 from "../modules/base64.js";
+//modularize>> import * as base64 from "../modules/base_string.js";
+//<<
+
+
+//$>>	fetch_tables
 let formats = false;
 let multibase = false;
 
@@ -25,36 +26,37 @@ async function fetch_tables() {
 
 setTimeout(fetch_tables,0)
 
-export async function do_hash_buffer(text) {
+
+//$>>	do_hash_buffer
+async function do_hash_buffer(text) {
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
     const hash = await g_crypto.digest('SHA-256', data);
     return hash
 }
 
-export async function do_hash(text) {
+//$>>	do_hash
+async function do_hash(text) {
     let buffer = await do_hash_buffer(text)
     const hashArray = Array.from(new Uint8Array(buffer));
     return base64.bytesToBase64(hashArray)
 }
 
-export function from_hash(base64text) {
+//$>>	from_hash
+function from_hash(base64text) {
     let bytes = base64.base64ToBytes(base64text)
     return bytes
 }
 
-
-export function to_base64(text) {
+//$>>	to_base64
+function to_base64(text) {
     return base64.base64encode(text)
 }
 
-export function from_base64(base64text) {
+//$>>	from_base64
+function from_base64(base64text) {
     let bytesAsText = base64.base64decode(base64text)
     return bytesAsText
-}
-
-export function initializer() {
-    window.do_hash = do_hash
 }
 
 
@@ -92,9 +94,12 @@ multibase - version - multicodec - multihash (name : size : digest in hex)
 
 */
 
+
+//$>>	CWID
+
 const _do_hash = do_hash
 
-export class CWID {
+class CWID {
 
     constructor() {
         this.version = '01'
@@ -326,3 +331,13 @@ export class CWID {
 }
 
 
+
+//$$EXPORTABLE::
+/*
+fetch_tables
+do_hash_buffer
+do_hash
+to_base64
+from_base64
+CWID
+*/

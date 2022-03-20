@@ -649,7 +649,7 @@
 </style>
 </head>
 <script type="module">
-    import {initializer, do_hash,from_hash,to_base64,from_base64}  from "../client/hashing.js"
+    import {initializer, do_hash,from_hash,to_base64,from_base64}  from "../client/cwid.js"
     (async () => {
 		initializer()
 		//
@@ -674,7 +674,7 @@
 </script>
 
 <script type="module" >
-	import {CWID}  from "../client/hashing.js"
+	import {CWID}  from "../client/cwid.js"
 	(async () => {
 		let cwider = new CWID()
 		let text = "MUCH TO DO ABOUT IDENTITY"
