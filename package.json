@@ -1,6 +1,6 @@
 {
   "name": "cwid",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Copious World content Identififier",
   "main": "index.js",
   "directories": {
