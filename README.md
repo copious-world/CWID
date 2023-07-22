@@ -4,9 +4,89 @@
 
 You might pronouns it as "quid" or you might say, "swid" like squid. 
 
-### Purpose
+### What is a CWID
 
-A ***CWID*** is something like an IPFS CID, but it has a different format. In particular it separates a prefix string and a string representing the SHA256 of content by a delimiting character. The *exclamation point*, **'!'**, has been chosen as this delimiting character.
+A **CWID** is an *<u>identifier format</u>* for use as a decentralized identification. Hence, it is part of a [**DID**](https://www.w3.org/TR/did-core/) specified by the **W3C**, found here: https://www.w3.org/TR/did-core/.
+The **CWID** will conform to the ***cwid*** *method*, where *method* is defined in the [**DID**](https://www.w3.org/TR/did-core/) spec.
+
+The in the [**DID**](https://www.w3.org/TR/did-core/) core specfication, the DID format is given as follows:
+
+```
+did                = "did:" method-name ":" method-specific-id
+method-name        = 1*method-char
+method-char        = %x61-7A / DIGIT
+method-specific-id = *( *idchar ":" ) 1*idchar
+idchar             = ALPHA / DIGIT / "." / "-" / "_" / pct-encoded
+pct-encoded        = "%" HEXDIG HEXDIG
+```
+
+By the DID specification, the CWID format has it as the following:
+
+* method-name  = 'cwid'
+* method-specific-id = HEX-CWID
+
+This module produces a CWID which may be rendered in base64 or base16, which is HEX. In most applications using a CWID, the base64 format will be the most useful. But, in keeping with the [**DID**](https://www.w3.org/TR/did-core/) spec, the HEX will be provided.
+
+The module provides a class that is a small engine that produces a **CWID** and can also produce the **DID** containing the **CWID**. So, with this module you will be able to call a method producing something like the following:
+
+```
+let my_cwid_did = cwid_engine.get_DID(my_cwid)
+console.log(my_cwid_did)
+```
+
+This will print something like:
+
+```
+did:cwid:9fef8e97d987f97aa987d8e79
+```
+
+The third position will be a hex format string which will be a specific hash of information to be used in generating the **CWID**. The string will include a reference to the cryptographic hash that is used.
+
+## CWID Format
+
+A ***CWID*** is a hash of a sequece of bits. 
+
+
+The CWID format in HEX is as follows:
+
+```
+cwid 			= base-code descriptor "!" hex-string
+base-code 		= "f"
+descriptor		= hex-string
+hex-string 		= *HEXDIG 1* HEXDIG
+```
+
+
+The **descriptor** is a hex representation of the bytes of a string made of the following sequence:
+
+```
+pre-base-descriptor = version type-code hash-code size 
+```
+
+* **version** = `01` for this format version.
+* **type-code** - `55` which is the raw data type
+* **hash-code** - depends on the constructor parameter defaults to `12` for the sha255 hash.
+* **size** - the size in HEX of a hash block in bytes hence 256/8 = 64
+
+The representation of the CWID in HEX is amenable to the DID specification. The most common form will be base64. So, the following will can redefine the CWID format for base64url.
+
+
+The CWID format in base64url is as follows:
+
+```
+cwid 			= base-code descriptor "!" base64-string
+base-code 		= "u"
+descriptor		= base64-string
+base64-string 	= *64DIG 1* 64DIG
+```
+
+The *pre-base-descriptor* string will be constructed using the hex values. However, it will be a base64 string of the byte array encoded from the *pre-base-descriptor* string.
+
+If you use the UCWID factory, you will see that the prefix before the "!" is always the same for the base. 
+
+### usage
+
+Since the prefix defining the hash content of the string is always the same and the separator **'!'** is identifiable and not within the character set of the two bases in use, it will be easy to split the string into decoding information and data information.
 
 A method is provided to extract the hash string from the ***CWID***. But, in javascript it can be easily done by spliting the string. E.g.
 
@@ -17,6 +97,18 @@ let cwid = await cwid_maker.cwid("this is some text")
 let hh_sha255 = (cwid.split('!'))[1]
 // This will be in the base chosen for the CWID (either hex or base64url).
 ```
+
+In order to retrieve decoding information, an application using this format can simply key the prefix to the methods to use.
+
+```
+
+let prefix = (cwid.split('!'))[0]
+
+let decoder = match_decoder_to_prefix(prefix)  // an application method
+let match_bits = decoder(hh_sha255)		// a part of the app
+
+```
+
 
 ### Bases Supported
 

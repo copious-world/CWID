@@ -1,5 +1,8 @@
 //
-// MODULE: CRYPTO WRAPS (windowized)
+// MODULE: CWID (windowized)
+
+// https://github.com/Daninet/hash-wasm
+// https://nickb.dev/blog/authoring-a-simd-enhanced-wasm-library-with-rust/
 
 const HASH_SEP = '!'
 
