@@ -2,17 +2,24 @@ let CWID = require('../lib/cwid.js')
 
 let do_hash = CWID.do_hash
 
-let p = do_hash("this is a test")
-console.log(p)
+async function static_hash() {
+    let p = await do_hash("this is a test") // this is async due to ref to crypto.subtle being async
+    console.log(p)    
+}
 
 async function run_test() {
-    let cwider = new CWID()
-    await cwider.init()
+    //
+    await static_hash()
+    //
+    await CWID.initialize()  // initialize the whole module if files or not loaded...
+    //
+    let cwider = new CWID() // the CWID engine will not load file behind the scene and will fail if the module in general is no initalized
+    //
     let text = "MUCH TO DO ABOUT IDENTITY"
-    let p = await cwider._hash_of_sha(text,'hex')
-    console.log('')
+    let p = await cwider._hash_of(text,'hex')
+    console.log('1')
     console.log(text)
-    console.log('')
+    console.log('2')
     console.log(p)
     console.log('--------------------------------------')
     let cwid = await cwider.cwid(text)
@@ -57,6 +64,17 @@ async function run_test() {
     cwid = cwider.change_base(cwid,'u')
     console.log(cwid)
     console.log('--------------------------------------')
+    let did = cwider.cwid_to_did(cwid)
+    console.log(did)
+    console.log('--------------------------------------')
+
+
+    let cwider2 = new CWID('blake3')
+    let cwid2 = await cwider2.cwid(text)
+    console.log("blake3:",cwid2)
+    did = cwider2.cwid_to_did(cwid2)
+    console.log(did)
+
 }
 
 

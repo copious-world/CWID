@@ -679,7 +679,7 @@
 	(async () => {
 		let cwider = new CWID()
 		let text = "MUCH TO DO ABOUT IDENTITY"
-		let p = await cwider._hash_of_sha(text,'hex')
+		let p = await cwider._hash_of(text,'hex')
 		document.write('<br>')
 		document.write(text)
 		document.write('<br>')

@@ -103,23 +103,23 @@ function getBase64Code(charCode) {
 
 //$>>	bytesToBase64
 function bytesToBase64(bytes,url_no) {
-	let apha = url_no ? base64abc : base64abc_url
+	let alpha = url_no ? base64abc : base64abc_url
 	let result = '', i, l = bytes.length;
 	for (i = 2; i < l; i += 3) {
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-		result += apha[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
-		result += apha[bytes[i] & 0x3F];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+		result += alpha[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
+		result += alpha[bytes[i] & 0x3F];
 	}
 	if (i === l + 1) { // 1 octet yet to write
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[(bytes[i - 2] & 0x03) << 4];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[(bytes[i - 2] & 0x03) << 4];
 		result += "==";
 	}
 	if (i === l) { // 2 octets yet to write
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-		result += apha[(bytes[i - 1] & 0x0F) << 2];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+		result += alpha[(bytes[i - 1] & 0x0F) << 2];
 		result += "=";
 	}
 	return result;

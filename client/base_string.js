@@ -1,4 +1,9 @@
 // MODULE: BASE STRING (windowized)
+// When windowized, these methods defined on the window, and base_string = window 
+// povides access similar to the module call
+
+// module:
+// import {base64} from "./base64"
 
 //$>>	gen_nonce
 function gen_nonce() {
@@ -13,6 +18,7 @@ function hex_fromArrayOfBytes(arrayOfBytes) {
     return(hexstr)
 }
 //--<
+
 
 //$>>	hex_fromTypedArray
 //                                                  <<depends>> hex_fromArrayOfBytes
@@ -62,6 +68,7 @@ function hex_toByteArray(hexstr) {
 }
 //--<
 
+
 //$>>	bufferToArrayBufferCycle
 //>--
 function bufferToArrayBufferCycle(buffer) {
@@ -73,6 +80,7 @@ function bufferToArrayBufferCycle(buffer) {
   return ab;
 }
 //--<
+
 
 //$>>	string_from_buffer
 //>--
@@ -97,14 +105,43 @@ function buffer_from_cvs_array(number_els) {
 }
 //--<
 
+//$>>	code_to_buffer
+//>--
+/**
+ * 
+ * @param {string} hh - the data to convert
+ * @param {string} type - single character code indicating the type of the string
+ * @returns Uint8Array of the decoded string
+ */
+function code_to_buffer(hh,type) {
+    let ua8 = false
+    if ( base === 'u' ) {
+        while ( hh.length % 4 ) hh += '='
+        ua8 = base64.base64ToBytes(hh)
+    } else if ( base === 'f' ) {
+        ua8 = hex_toByteArray(hh)
+    }
+    return ua8
+ }
+//--<
+
+
+
 //$>>	buffer_from_b64_csv
 //                                                  <<depends>> buffer_from_cvs_array
 //>--
+/**
+ * Converts from base64 to the orginial text, a comma delimited list of numbers,
+ * and then turns the list into a Uint8Array
+ * @param {string} b64_number_els - b64 representation of comma delimited numbers
+ * @returns 
+ */
 function buffer_from_b64_csv(b64_number_els) {
-	let numbers = atob(b64_number_els)
+	let numbers = code_to_buffer('u',b64_number_els)
 	return buffer_from_cvs_array(numbers)
 }
 //--<
+
 
 //$$EXPORTABLE::
 /*
