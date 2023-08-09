@@ -94,8 +94,8 @@ class WASMInterface {
     read_Uint8Array(pointer, size) {
         if (this.linearMemory.buffer) {
             const view = new Uint8Array(this.linearMemory.buffer, pointer, size);
-            const length = view.findIndex(byte => byte === 0);
-            return new Uint8Array(this.linearMemory.buffer, pointer, length);
+            //const length = view.findIndex(byte => byte === 0);
+            return new Uint8Array(this.linearMemory.buffer, pointer, size);
         }
     }
     /**

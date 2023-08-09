@@ -1,0 +1,65 @@
+
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>hello-wasm example</title>
+  </head>
+  <body>
+    <script src="js/wasm_wrap.js" ></script>
+    <script src="js/hash_wrap.js" ></script>
+    <script>
+/*
+    // https://depth-first.com/articles/2020/07/07/rust-and-webassembly-from-scratch-hello-world-with-strings/
+    // cargo build --target wasm32-unknown-unknown --release
+*/
+      // borrowed off of stack exchange
+      function u8array2hex(u8array) { // buffer is an ArrayBuffer
+        return [...u8array]
+            .map(x => x.toString(16).padStart(2, '0'))
+            .join('');
+      }
+
+      async function  base64_arraybuffer(data) {
+        // Use a FileReader to generate a base64 data URI
+        const base64url = await new Promise((r) => {
+            const reader = new FileReader()
+            reader.onload = () => r(reader.result)
+            reader.readAsDataURL(new Blob([data]))
+        })
+
+        /*
+        The result looks like 
+        "data:application/octet-stream;base64,<your base64 data>", 
+        so we split off the beginning:
+        */
+        return base64url.substring(base64url.indexOf(',')+1)
+      }
+
+      // 
+      async function main() {
+        //
+        let wasmod = new Hasher('/wasm/blake3_wasm_nopackage')
+        await wasmod.init("mod")
+
+        const u8array = wasmod.hash('this big test of hashing');
+
+        console.log(u8array2hex(u8array))
+        console.log(await base64_arraybuffer(u8array))
+        //
+      }
+
+      setTimeout(main,1000)
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
