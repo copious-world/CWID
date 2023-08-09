@@ -1,13 +1,13 @@
 {
   "name": "cwid",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "Copious World content Identififier",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "node test/index.js & http-server &  open http://localhost:8080/test/"
+    "test": "node test/index.js & node ./assets/wasm_serv.js &  open http://localhost:8080/test/"
   },
   "repository": {
     "type": "git",

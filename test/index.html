@@ -648,11 +648,30 @@
 
 </style>
 </head>
+<script>
+// MODULE: GLOBAL CRYPTO (windowized)
+
+//$>>	setup_window_crypto
+function setup_window_crypto() {
+  if ( window.g_crypto === undefined ) {
+    window.g_crypto = window.crypto ? window.crypto.subtle : null
+    if ( g_crypto === null  ) {
+      alert("No cryptography support in this browser. To claim ownership of assets, please use another browser.")
+    }
+  }
+}
+
+setup_window_crypto()
+
+//$$EXPORTABLE::
+/*
+setup_window_crypto
+*/
+</script>
 <script type="module">
-    import {initializer, do_hash,from_hash,to_base64,from_base64}  from "../client/cwid.js"
+    import { CWID, do_hash, from_hash, to_base64, from_base64}  from "../modules/cwid.js"
     (async () => {
-		initializer()
-		//
+		await CWID.initialize()
         let k = await do_hash("this is a test")
         document.write(k)
         document.write('<br>')
@@ -664,7 +683,8 @@
 		document.write('<hr>')
     })()
 </script>
-<script>
+<script type="module">
+	import {do_hash}  from "../modules/cwid.js"
 	let hasher = async () => {
 		let p = await do_hash("this")
 		document.write('delayed: <b>sha256 hash of "this" base64url:</b>  ')
@@ -674,8 +694,9 @@
 </script>
 
 <script type="module" >
-	import {CWID}  from "../client/cwid.js"
+	import {CWID}  from "../modules/cwid.js"
 	(async () => {
+		await CWID.initialize()
 		let cwider = new CWID()
 		let text = "MUCH TO DO ABOUT IDENTITY"
 		let p = await cwider._hash_of(text,'hex')

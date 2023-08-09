@@ -1,3 +1,4 @@
+// MODULE: base64 (windowized)
 /*
 MIT License
 
@@ -22,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+//$>>	getBase64Code
 /*
 // This constant can also be computed with the following algorithm:
 const base64abc = [],
@@ -99,29 +101,31 @@ function getBase64Code(charCode) {
 	return code;
 }
 
+//$>>	bytesToBase64
 export function bytesToBase64(bytes,url_no) {
-	let apha = url_no ? base64abc : base64abc_url
+	let alpha = url_no ? base64abc : base64abc_url
 	let result = '', i, l = bytes.length;
 	for (i = 2; i < l; i += 3) {
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-		result += apha[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
-		result += apha[bytes[i] & 0x3F];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+		result += alpha[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
+		result += alpha[bytes[i] & 0x3F];
 	}
 	if (i === l + 1) { // 1 octet yet to write
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[(bytes[i - 2] & 0x03) << 4];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[(bytes[i - 2] & 0x03) << 4];
 		result += "==";
 	}
 	if (i === l) { // 2 octets yet to write
-		result += apha[bytes[i - 2] >> 2];
-		result += apha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-		result += apha[(bytes[i - 1] & 0x0F) << 2];
+		result += alpha[bytes[i - 2] >> 2];
+		result += alpha[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+		result += alpha[(bytes[i - 1] & 0x0F) << 2];
 		result += "=";
 	}
 	return result;
 }
 
+//$>>	base64ToBytes
 export function base64ToBytes(str) {
 	if (str.length % 4 !== 0) {
 		throw new Error("Unable to parse base64 string.");
@@ -147,10 +151,24 @@ export function base64ToBytes(str) {
 	return result.subarray(0, result.length - missingOctets);
 }
 
+
+//$>>	base64encode
 export function base64encode(str, encoder = new TextEncoder()) {
 	return bytesToBase64(encoder.encode(str));
 }
 
+//$>>	base64decode
 export function base64decode(str, decoder = new TextDecoder()) {
 	return decoder.decode(base64ToBytes(str));
 }
+
+
+
+//$$EXPORTABLE::
+/*
+getBase64Code
+bytesToBase64
+base64ToBytes
+base64encode
+base64decode
+*/

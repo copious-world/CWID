@@ -1,11 +1,10 @@
 //
-// MODULE: CWID (windowized)
-
-
+// MODULE: CWID (modularized)
 
 // >> import
-//modularize>> import * as base64 from "../modules/base64.js";
-//modularize>> import * as base_string from "../modules/base_string.js";
+import * as base64 from "../modules/base64.js";
+import * as base_string from "../modules/base_string.js";
+import {Hasher} from "../modules/hash_wrap.mjs"
 //<<
 
 
@@ -25,6 +24,7 @@ const blake3_hash = (str) => {
         let hash = blake_wasm.hash(str); // => hash a string to a uint8array
         return hash
     }
+    return false;
 }
 
 
@@ -147,7 +147,7 @@ async function do_hash_buffer(text,hash_choice) {
  * @param {object} multibase - a map of base names, e.g. "base64url" to base desriptor, include the base code
  * @param {string} ?hash_name - an optional hash name offering a selection from supported hashes
  */
-class CWID {
+export class CWID {
 
     constructor(hash_name,formats,multibase) {
         this.init(formats,multibase,hash_name)
@@ -523,25 +523,25 @@ setTimeout(async () => {
 
 
 
-async function do_hash(text) {
+export async function do_hash(text) {
     let buffer = await do_hash_buffer(text)
     const hashArray = Array.from(new Uint8Array(buffer));
     return base64.bytesToBase64(hashArray)
 }
 
 //$>>	from_hash
-function from_hash(base64text) {
+export function from_hash(base64text) {
     let bytes = base64.base64ToBytes(base64text)
     return bytes
 }
 
 //$>>	to_base64
-function to_base64(text) {
+export function to_base64(text) {
     return base64.base64encode(text)
 }
 
 //$>>	from_base64
-function from_base64(base64text) {
+export function from_base64(base64text) {
     let bytesAsText = base64.base64decode(base64text)
     return bytesAsText
 }

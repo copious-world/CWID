@@ -1,3 +1,18 @@
+// MODULE: BASE STRING (windowized)
+// When windowized, these methods defined on the window, and base_string = window 
+// povides access similar to the module call
+
+// module:
+// import * as base64 from "../modules/base64"
+import * as base64 from "./base64.js"
+
+//$>>	gen_nonce
+export function gen_nonce() {
+	return btoa(window.crypto.getRandomValues(new Uint8Array(16)))
+}
+
+
+//$>>	hex_fromArrayOfBytes
 //>--
 export function hex_fromArrayOfBytes(arrayOfBytes) {
     const hexstr = arrayOfBytes.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -5,6 +20,9 @@ export function hex_fromArrayOfBytes(arrayOfBytes) {
 }
 //--<
 
+
+//$>>	hex_fromTypedArray
+//                                                  <<depends>> hex_fromArrayOfBytes
 //>--
 export function hex_fromTypedArray(byteArray){
     let arrayOfBytes = Array.from(byteArray)
@@ -12,15 +30,15 @@ export function hex_fromTypedArray(byteArray){
 }
 //--<
 
-
-
+//$>>	hex_fromByteArray
+//                                                  <<depends>> hex_fromTypedArray,ArrayOfBytes_toByteArray
 //>--
 export function hex_fromByteArray(byteArray){
     return hex_fromTypedArray(ArrayOfBytes_toByteArray(byteArray))
 }
 //--<
 
-
+//$>>	hex_toArrayOfBytes
 //>--
 export function hex_toArrayOfBytes(hexString) {
     let result = [];
@@ -31,6 +49,8 @@ export function hex_toArrayOfBytes(hexString) {
 }
 //--<
 
+
+//$>>	ArrayOfBytes_toByteArray
 //>--
 export function ArrayOfBytes_toByteArray(arrayOfBytes) {
     let byteArray = new Uint8Array(arrayOfBytes)
@@ -38,6 +58,10 @@ export function ArrayOfBytes_toByteArray(arrayOfBytes) {
 }
 //--<
 
+
+
+//$>>	hex_toByteArray
+//                                                  <<depends>> hex_toArrayOfBytes
 //>--
 export function hex_toByteArray(hexstr) {
     let aob = hex_toArrayOfBytes(hexstr)
@@ -45,6 +69,8 @@ export function hex_toByteArray(hexstr) {
 }
 //--<
 
+
+//$>>	bufferToArrayBufferCycle
 //>--
 export function bufferToArrayBufferCycle(buffer) {
   var ab = new ArrayBuffer(buffer.length);
@@ -56,6 +82,9 @@ export function bufferToArrayBufferCycle(buffer) {
 }
 //--<
 
+
+//$>>	string_from_buffer
+//>--
 export function string_from_buffer(bytes) {
 	let s = ""
 	let n = bytes.length
@@ -65,14 +94,75 @@ export function string_from_buffer(bytes) {
 	}
 	return s
 }
+//--<
 
+
+//$>>	buffer_from_cvs_array
+//>--
 export function buffer_from_cvs_array(number_els) {
 	let els = number_els.split(',').map(el => parseInt(el))
 	let buf = new Uint8Array(els)
 	return buf
 }
+//--<
 
+//$>>	code_to_buffer
+//>--
+/**
+ * 
+ * @param {string} hh - the data to convert
+ * @param {string} type - single character code indicating the type of the string
+ * @returns Uint8Array of the decoded string
+ */
+export function code_to_buffer(hh,base) {
+    let ua8 = false
+    if ( base === 'u' ) {
+        while ( hh.length % 4 ) hh += '='
+        ua8 = base64.base64ToBytes(hh)
+    } else if ( base === 'f' ) {
+        ua8 = hex_toByteArray(hh)
+    }
+    return ua8
+ }
+//--<
+
+
+
+//$>>	buffer_from_b64_csv
+//                                                  <<depends>> buffer_from_cvs_array
+//>--
+/**
+ * Converts from base64 to the orginial text, a comma delimited list of numbers,
+ * and then turns the list into a Uint8Array
+ * @param {string} b64_number_els - b64 representation of comma delimited numbers
+ * @returns 
+ */
 export function buffer_from_b64_csv(b64_number_els) {
-	let numbers = atob(b64_number_els)
+	let numbers = code_to_buffer('u',b64_number_els)
 	return buffer_from_cvs_array(numbers)
 }
+//--<
+
+
+//>--
+export function b64_fromTypedArray(u8ary){
+    let base64urlstr = base64.bytesToBase64(u8ary)
+    return(base64urlstr)
+}
+//--<
+
+
+//$$EXPORTABLE::
+/*
+gen_nonce
+hex_fromArrayOfBytes
+hex_fromTypedArray
+hex_fromByteArray
+hex_toArrayOfBytes
+ArrayOfBytes_toByteArray
+hex_toByteArray
+bufferToArrayBufferCycle
+string_from_buffer
+buffer_from_cvs_array
+buffer_from_b64_csv
+*/

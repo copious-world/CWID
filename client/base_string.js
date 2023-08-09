@@ -113,7 +113,7 @@ function buffer_from_cvs_array(number_els) {
  * @param {string} type - single character code indicating the type of the string
  * @returns Uint8Array of the decoded string
  */
-function code_to_buffer(hh,type) {
+function code_to_buffer(hh,base) {
     let ua8 = false
     if ( base === 'u' ) {
         while ( hh.length % 4 ) hh += '='
