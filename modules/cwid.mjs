@@ -2,8 +2,8 @@
 // MODULE: CWID (modularized)
 
 // >> import
-import * as base64 from "../modules/base64.js";
-import * as base_string from "../modules/base_string.js";
+import * as base64 from "../modules/base64.mjs";
+import * as base_string from "../modules/base_string.mjs";
 import {Hasher} from "../modules/hash_wrap.mjs"
 //<<
 
@@ -160,6 +160,7 @@ export class CWID {
     static async initialize(){
         let ok = await fetch_tables()
         if ( !ok )  reject(new Error("fail to load multibase or formats or both"))
+        await get_blake_hasher('../assets/blake3_wasm_nopackage.wasm')
     }
     
     
@@ -252,7 +253,7 @@ export class CWID {
     async _hash_of(text,base) {
         if ( !(base) ) base = 'base64url'
         if ( base === 'base64url' ) {
-            let hh = await _do_hash(text)
+            let hh = await _do_hash(text,'base64url',this.hash_code)
             return hh.replace(/\=+/g,'')
         } else if ( base === 'hex' || base === 'base16' ) {
             return await _do_hash(text,'base16',this.hash_code)

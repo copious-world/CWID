@@ -733,6 +733,22 @@ setup_window_crypto
 		document.write('<br><b>hash buffer from cwid</b>: ')
 		document.write(bb)
 		document.write('<hr>')
+
+		let did = cwider.cwid_to_did(cwid)
+		document.write('<br><b>did</b>: ')
+		document.write(did)
+		document.write('<hr>')
+
+
+		let cwider2 = new CWID('blake3')
+		let cwid2 = await cwider2.cwid(text)
+		document.write('<br><b>blake3</b>: ')
+		document.write(cwid2)
+		did = cwider2.cwid_to_did(cwid2)
+		document.write('<hr>')
+		document.write('<br><b>did</b>: ')
+		document.write(did)
+		document.write('<hr>')
 	})()
 </script>
 <body>

@@ -150,7 +150,7 @@ async function do_hash_buffer(text,hash_choice) {
 class CWID {
 
     constructor(hash_name,formats,multibase) {
-        this.init(formats,multibase,hash_name)
+        this.init(hash_name,formats,multibase)
     }
 
 
@@ -172,7 +172,7 @@ class CWID {
      * @param {object} multibase 
      * @param {string} hash_name 
      */
-    init(formats,multibase,hash_name) {
+    init(hash_name,formats,multibase) {
         if ( hash_name == undefined ) {
             hash_name = DEFAULT_HASH_METHOD
         }
