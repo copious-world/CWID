@@ -84,7 +84,7 @@ export class WASMInterface {
         }
         return '';
     }
-    ;
+    
     /**
      *
      * @param pointer - the memory offset into the WASM page where text data is located
