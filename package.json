@@ -1,6 +1,6 @@
 {
   "name": "cwid",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Copious World content Identififier",
   "main": "index.js",
   "directories": {
@@ -31,10 +31,9 @@
     "url": "https://github.com/sponsors/copious-world"
   },
   "devDependencies": {
-    "roll-right": "^0.1.3"
+    "roll-right": "^0.1.4"
   },
   "dependencies": {
-    "blake3-node-neon-no-package": "^1.0.3",
-    "npm": "^9.8.1"
+    "npm": "^11.3.0"
   }
 }
